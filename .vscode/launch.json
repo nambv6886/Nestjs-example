@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "TS-Node Debug",
+      "program": "${workspaceFolder}/src/main.ts",
+      "internalConsoleOptions": "neverOpen",
+      "sourceMaps": true,
+      "preLaunchTask": "build",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js"],
+      "runtimeArgs": [
+        "--nolazy",
+      ],
+      "autoAttachChildProcesses": true,
+
+    }
+  ]
+}
