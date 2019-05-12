@@ -64,7 +64,6 @@ export class UserService {
         })
       }
 
-
       await this.sendEmailVerify(userSave, DOMAIN);
 
       return new ResponseMessage({
@@ -84,8 +83,25 @@ export class UserService {
     return this.userRepository.findByEmail(email);
   }
 
-  public async comparePassword(password: string, hashPassword: string): Promise<boolean> {
-    return await bcrypt.compare(password, hashPassword);
+  public async hashPassword(password: string, salt: string): Promise<string> {
+    return await bcrypt.hash(password, salt);
+  }
+
+  public async findAll(user: UserModel): Promise<UserModel[]> {
+    logger.info(`[UserService][FindAll]: ${user.email} do get all user`);
+    return await this.userRepository.findAll();
+  }
+
+  public async findById(id: number): Promise<UserModel> {
+    return await this.userRepository.findById(id);
+  }
+
+  public async update(user: UserModel): Promise<UserModel> {
+    return await this.userRepository.update(user);
+  }
+
+  public async delete(id: number): Promise<any> {
+    return await this.userRepository.delete(id);
   }
 
   private sendEmailVerify(user: UserModel, baseUrl) {

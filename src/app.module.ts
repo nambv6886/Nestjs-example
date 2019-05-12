@@ -9,6 +9,8 @@ import { EmailService } from './modules/email/email.service';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import { AuthService } from './modules/auth/auth.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserTokenService } from './modules/user-token/user-token.service';
+import { UserTokenModule } from './modules/user-token/user-token.module';
 
 @Module({
   imports: [
@@ -16,6 +18,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UserModule,
     UserRoleModule,
     AuthModule,
+    UserTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService, EmailService, AuthService],

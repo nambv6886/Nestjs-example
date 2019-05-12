@@ -14,6 +14,7 @@ async function bootstrap() {
   .setDescription('The API')
   .setVersion('1.0')
   .addTag('Nambv')
+  .addBearerAuth()
   .build();
 
   const document = SwaggerModule.createDocument(app, options);
