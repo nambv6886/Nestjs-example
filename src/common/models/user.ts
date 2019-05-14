@@ -77,6 +77,9 @@ export class ResponseLogin extends Response {
 
 export class JwtPayload {
   @ApiModelProperty()
+  userId: number;
+
+  @ApiModelProperty()
   email: string;
 
   @ApiModelProperty()
@@ -117,9 +120,26 @@ export class RefreshLoginRequest {
   }
 }
 
-export interface RefreshAccessToken {
+export class RefreshAccessToken {
   key: string;
   userId: number;
   iat: number;
   exp: number;
+
+  constructor(fields?: Partial<RefreshAccessToken>) {
+    if(fields) {
+      Object.assign(this, fields);
+    }
+  }
+}
+
+export class LogoutRequest {
+  @ApiModelProperty()
+  refreshToken: string;
+
+  constructor(fields?: Partial<LogoutRequest>) {
+    if(fields) {
+      Object.assign(this, fields);
+    }
+  }
 }

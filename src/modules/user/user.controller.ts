@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Inject, forwardRef, Get, UseGuards, Param } from '@nestjs/common';
+import { Controller, Post, Body, Inject, forwardRef, Get, UseGuards, Param, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 
@@ -7,7 +7,11 @@ import {
   RegisterResponse,
   ResponseLogin,
   RequestLogin,
-  GetUserListResponse
+  GetUserListResponse,
+  RefreshLoginRequest,
+  LogoutRequest,
+  Response,
+  JwtPayload
 } from '../../common/models/user';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from './user.service';
@@ -50,7 +54,7 @@ export class UserController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.USER)
   public async doFindAll(@CurrentUser() user: UserModel): Promise<UserModel[]>{
     return await this.userService.findAll(user);
   }
@@ -60,7 +64,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.USER)
   public async doFindById(@Param('id') id: number): Promise<UserModel> {
-    return this.userService.findById(id);
+    return await this.userService.findById(id);
   }
 
   @Get('findByEmail')
@@ -68,6 +72,22 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.USER)
   public async doFindByEmail(@Body() email: string): Promise<UserModel> {
-    return this.userService.findByEmail(email);
+    return await this.userService.findByEmail(email);
   }
+
+  @Post('refreshLogin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RoleType.USER)
+  public async doRefreshLogin(@Body() request: RefreshLoginRequest): Promise<ResponseLogin> {
+    return await this.authService.doRefreshLogin(request);
+  }
+
+  @Post('logout')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RoleType.USER)
+  public async doLogout(@CurrentUser() user: JwtPayload, @Body() logoutRequest: LogoutRequest, @Req() req): Promise<Response> {
+    return await this.authService.doLogout(user, logoutRequest.refreshToken, req.headers.authorization);
+  } 
 }

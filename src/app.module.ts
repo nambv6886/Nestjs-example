@@ -11,6 +11,7 @@ import { AuthService } from './modules/auth/auth.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserTokenService } from './modules/user-token/user-token.service';
 import { UserTokenModule } from './modules/user-token/user-token.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserTokenModule } from './modules/user-token/user-token.module';
     UserRoleModule,
     AuthModule,
     UserTokenModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService, EmailService, AuthService],

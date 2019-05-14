@@ -5,7 +5,7 @@ import * as ms from 'ms';
 
 import { UserTokenRepository } from './user-token.repository';
 import { UserToken } from './user-token.model';
-import { REFRESH_LOGIN_KEY_LENGTH, REFRESH_LOGIN_TIME_EXPIRES, REFRESH_LOGIN_JWT_KEY } from 'config/environment';
+import { REFRESH_LOGIN_KEY_LENGTH, REFRESH_LOGIN_TIME_EXPIRES, REFRESH_LOGIN_JWT_KEY } from '../../config/environment';
 
 @Injectable()
 export class UserTokenService {
@@ -22,7 +22,7 @@ export class UserTokenService {
   }
 
   public async deleteByUserIdAndKey(userId: number, key: string): Promise<any> {
-    return await this.deleteByUserIdAndKey(userId, key);
+    return await this.userTokenRepository.deleteByUserIdAndKey(userId, key);
   }
 
   public async findOneByUserId(userId: number): Promise<UserToken> {

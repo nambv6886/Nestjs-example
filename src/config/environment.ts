@@ -25,3 +25,5 @@ export const REFRESH_LOGIN_KEY_LENGTH = +(process.env.REFRESH_LOGIN_KEY_LENGTH);
 export const REFRESH_LOGIN_TIME_EXPIRES = process.env.REFRESH_LOGIN_TIME_EXPIRES;
 
 export const REFRESH_LOGIN_JWT_KEY = process.env.REFRESH_LOGIN_JWT_KEY;
+
+export const JWT_EXPIRES_TIME = process.env.REFRESH_LOGIN_JWT_KEY;
